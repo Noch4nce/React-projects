@@ -33,34 +33,35 @@ code {
 
 	button {
 		border: none;
-		width: 130px;
-		height: 45px;
+		padding: 10px 25px;
+		width: 120px;
 		border-radius: 10px;
 		background: #eec0c6;
 		color: #ffffff;
 		cursor: pointer;
 		font-size: 20px;
+		transition: all 0.05s ease-in-out;
 
 		&.minus {
 			background-color: #ae3030;
 			box-shadow: 0 4px 2px #742121;
 			margin-right: 18px;
-			transition: background-color 0.5s ease;
-
-			&:hover {
-				background-color: rgba(255, 0, 0, 0.9);
-			}
+			border: 1px solid darken(#742121, 15%);
 		}
 
 		&.plus {
 			background-color: #45a36c;
 			box-shadow: 0 4px 2px #215335;
+			border: 1px solid darken(#215335, 15%);
+		}
 
-			transition: background-color 0.5s ease;
+		&:hover {
+			transform: translateY(-2px);
+		}
 
-			&:hover {
-				background-color: rgba(29, 135, 48, 0.9);
-			}
+		&:active {
+			transform: translateY(2px);
+			box-shadow: none;
 		}
 	}
 }
