@@ -1,2 +1,2 @@
 ## Counter
-#### - [Deploy link](/)
+#### - [Deploy link](https://counter-nch.netlify.app/)
