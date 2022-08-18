@@ -1,10 +1,11 @@
 import './index.scss'
-import Counter from './components/Counter/Counter'
+import Modal from './components/Modal/Modal'
 
 function App() {
 	return (
 		<>
-			<Counter />
+			{/*<Counter />*/}
+			<Modal />
 		</>
 	)
 }
