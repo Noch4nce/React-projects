@@ -42,30 +42,33 @@ function Result() {
 
 const Game = () => {
 	const [step, setStep] = useState(0)
-	let widthProgress = 100 / questions.length
+	const widthProgress = Math.round((step / questions.length) * 100)
 	let userResult = undefined
 
 	const onNextVariant = (event) => {
 		const target = event.target
 		const arr = questions[step].variants
 		userResult = arr.indexOf(target.innerText)
-		// widthProgress = widthProgress + widthProgress
-		// console.log(widthProgress, "widthProgress")
 
 		setStep(step + 1)
 	}
 
-
 	return (
 		<>
 			<div className="progress">
-				<div style={{ width: '50%' }} className="progress__inner" />
+				<div
+					style={{ width: `${widthProgress}%` }}
+					className="progress__inner"
+				/>
 			</div>
 			<h1>{questions[step].title}</h1>
 			<ul>
 				{questions[step].variants.map((variant) => {
 					return (
-						<li key={variant} onClick={(event) => onNextVariant(event)}>
+						<li
+							key={variant}
+							onClick={(event) => onNextVariant(event)}
+						>
 							{variant}
 						</li>
 					)
