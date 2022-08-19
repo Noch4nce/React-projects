@@ -1,11 +1,12 @@
 import './index.scss'
-import Modal from './components/Modal/Modal'
+import Quiz from './components/Quiz/Quiz'
 
 function App() {
 	return (
 		<>
 			{/*<Counter />*/}
-			<Modal />
+			{/*<Modal />*/}
+			<Quiz />
 		</>
 	)
 }
