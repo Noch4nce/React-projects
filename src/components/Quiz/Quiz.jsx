@@ -1,5 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './styles.scss'
+
+const questions = [
+	{
+		title: 'React - это ... ?',
+		variants: ['библиотека', 'фреймворк', 'приложение'],
+		correct: 0
+	},
+	{
+		title: 'Компонент - это ... ',
+		variants: [
+			'приложение',
+			'часть приложения или страницы',
+			'то, что я не знаю что такое'
+		],
+		correct: 1
+	},
+	{
+		title: 'Что такое JSX?',
+		variants: [
+			'Это простой HTML',
+			'Это функция',
+			'Это тот же HTML, но с возможностью выполнять JS-код'
+		],
+		correct: 2
+	}
+]
 
 function Result() {
 	return (
@@ -15,16 +41,35 @@ function Result() {
 }
 
 const Game = () => {
+	const [step, setStep] = useState(0)
+	let widthProgress = 100 / questions.length
+	let userResult = undefined
+
+	const onNextVariant = (event) => {
+		const target = event.target
+		const arr = questions[step].variants
+		userResult = arr.indexOf(target.innerText)
+		// widthProgress = widthProgress + widthProgress
+		// console.log(widthProgress, "widthProgress")
+
+		setStep(step + 1)
+	}
+
+
 	return (
 		<>
 			<div className="progress">
-				<div style={{ width: '50%' }} className='progress__inner'/>
+				<div style={{ width: '50%' }} className="progress__inner" />
 			</div>
-			<h1>Что такое useState?</h1>
+			<h1>{questions[step].title}</h1>
 			<ul>
-				<li>Это функция для хранения данных компонента</li>
-				<li>Это глобальный стейт</li>
-				<li>Это когда на ты никому не нужен</li>
+				{questions[step].variants.map((variant) => {
+					return (
+						<li key={variant} onClick={(event) => onNextVariant(event)}>
+							{variant}
+						</li>
+					)
+				})}
 			</ul>
 		</>
 	)
