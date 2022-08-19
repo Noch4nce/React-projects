@@ -7,13 +7,14 @@
 
 	.modal_btn {
 		background-color: #ffffff;
-		min-width: 280px;
-		min-height: 40px;
 		border-radius: 20px;
-		padding: 6px;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 
 		button {
+			min-width: 280px;
+			min-height: 40px;
+			padding: 6px;
+			cursor: pointer;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -22,7 +23,6 @@
 			border: none;
 			outline: none;
 			background: none;
-			cursor: pointer;
 
 			.icon {
 				color: #007775;
@@ -47,14 +47,18 @@
 
 			svg {
 				position: absolute;
+				cursor: pointer;
 				width: 36px;
 				height: 36px;
 				right: 0;
 				top: 0;
 				margin: 3px;
+				opacity: 0.5;
+
+				&:hover {
+					opacity: 1;
+				}
 			}
 		}
 	}
-
-
 }
