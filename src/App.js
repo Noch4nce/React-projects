@@ -1,12 +1,13 @@
 import './index.scss'
-import Quiz from './components/Quiz/Quiz'
+import Users from './components/Users/Users'
 
 function App() {
 	return (
 		<>
 			{/*<Counter />*/}
 			{/*<Modal />*/}
-			<Quiz />
+			{/*<Quiz />*/}
+			<Users />
 		</>
 	)
 }
