@@ -27,14 +27,14 @@ const questions = [
 	}
 ]
 
-function Result() {
+function Result({ correctResults }) {
 	return (
 		<div className="result">
 			<img
 				src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png"
 				alt="result"
 			/>
-			<h2>Вы отгадали 3 ответа из 10</h2>
+			<h2>Вы отгадали {correctResults} ответа из 10</h2>
 			<button>Попробовать снова</button>
 		</div>
 	)
@@ -42,38 +42,50 @@ function Result() {
 
 const Game = () => {
 	const [step, setStep] = useState(0)
+	const [correctResults, setCorrectResults] = useState(0)
 	const widthProgress = Math.round((step / questions.length) * 100)
-	let userResult = undefined
 
-	const onNextVariant = (event) => {
+	const onNextVariant = (event, index) => {
 		const target = event.target
-		const arr = questions[step].variants
-		userResult = arr.indexOf(target.innerText)
+		const variantsArr = questions[step].variants
+		const userPick = variantsArr.indexOf(target.innerText)
+
+		if (questions[step].correct === userPick) {
+			setCorrectResults(correctResults + 1)
+		}
 
 		setStep(step + 1)
 	}
 
 	return (
 		<>
-			<div className="progress">
-				<div
-					style={{ width: `${widthProgress}%` }}
-					className="progress__inner"
-				/>
-			</div>
-			<h1>{questions[step].title}</h1>
-			<ul>
-				{questions[step].variants.map((variant) => {
-					return (
-						<li
-							key={variant}
-							onClick={(event) => onNextVariant(event)}
-						>
-							{variant}
-						</li>
-					)
-				})}
-			</ul>
+			{step !== questions.length ? (
+				<div>
+					<div className="progress">
+						<div
+							style={{ width: `${widthProgress}%` }}
+							className="progress__inner"
+						/>
+					</div>
+					<h1>{questions[step].title}</h1>
+					<ul>
+						{questions[step].variants.map((variant, index) => {
+							return (
+								<li
+									key={variant}
+									onClick={(event) =>
+										onNextVariant(event, index)
+									}
+								>
+									{variant}
+								</li>
+							)
+						})}
+					</ul>
+				</div>
+			) : (
+				<Result correctResults={correctResults} />
+			)}
 		</>
 	)
 }
