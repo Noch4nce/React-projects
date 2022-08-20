@@ -34,7 +34,9 @@ function Result({ correctResults }) {
 				src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png"
 				alt="result"
 			/>
-			<h2>Вы отгадали {correctResults} ответа из 10</h2>
+			<h2>
+				Вы отгадали {correctResults} ответа из {questions.length}
+			</h2>
 			<button>Попробовать снова</button>
 		</div>
 	)
@@ -45,12 +47,8 @@ const Game = () => {
 	const [correctResults, setCorrectResults] = useState(0)
 	const widthProgress = Math.round((step / questions.length) * 100)
 
-	const onNextVariant = (event, index) => {
-		const target = event.target
-		const variantsArr = questions[step].variants
-		const userPick = variantsArr.indexOf(target.innerText)
-
-		if (questions[step].correct === userPick) {
+	const onNextVariant = (index) => {
+		if (questions[step].correct === index) {
 			setCorrectResults(correctResults + 1)
 		}
 
@@ -73,9 +71,7 @@ const Game = () => {
 							return (
 								<li
 									key={variant}
-									onClick={(event) =>
-										onNextVariant(event, index)
-									}
+									onClick={() => onNextVariant(index)}
 								>
 									{variant}
 								</li>
@@ -94,7 +90,6 @@ const Quiz = () => {
 	return (
 		<div className="App">
 			<Game />
-			{/*<Result />*/}
 		</div>
 	)
 }
