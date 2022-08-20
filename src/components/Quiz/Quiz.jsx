@@ -37,7 +37,9 @@ function Result({ correctResults }) {
 			<h2>
 				Вы отгадали {correctResults} ответа из {questions.length}
 			</h2>
-			<button>Попробовать снова</button>
+			<a href="/">
+				<button>Попробовать снова</button>
+			</a>
 		</div>
 	)
 }
