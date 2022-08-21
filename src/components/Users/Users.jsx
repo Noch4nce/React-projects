@@ -35,9 +35,9 @@ export const Users = () => {
 				</div>
 			) : (
 				<ul className="users-list">
-					{userData.map(() => {
-						return <User />
-					})}
+					{userData.map((userInfo) => (
+						<User key={userInfo.id} {...userInfo} />
+					))}
 				</ul>
 			)}
 			<button className="send-invite-btn">Отправить приглашение</button>
