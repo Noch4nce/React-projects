@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Skeleton from './Sceleton'
 import User from './User'
+import { USERS_API } from '../api/api'
 import './styles.scss'
 
 export const Users = ({ items, isLoading }) => {
+	const [userData, setUserData] = useState([])
+
+	useEffect(() => {
+		fetch(USERS_API)
+			.then((data) => data.json())
+			.then((json) => setUserData(json.data))
+			.catch((err) => {
+				console.warn(err)
+				alert('Response error')
+			})
+	}, [])
+
 	return (
 		<div className="App">
 			<div className="search">
@@ -20,7 +33,9 @@ export const Users = ({ items, isLoading }) => {
 				</div>
 			) : (
 				<ul className="users-list">
-					<User />
+					{userData.map(() => {
+						return <User />
+					})}
 				</ul>
 			)}
 			<button className="send-invite-btn">Отправить приглашение</button>
