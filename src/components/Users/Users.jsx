@@ -4,8 +4,9 @@ import User from './User'
 import { USERS_API } from '../api/api'
 import './styles.scss'
 
-export const Users = ({ items, isLoading }) => {
+export const Users = () => {
 	const [userData, setUserData] = useState([])
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
 		fetch(USERS_API)
@@ -15,6 +16,7 @@ export const Users = ({ items, isLoading }) => {
 				console.warn(err)
 				alert('Response error')
 			})
+			.finally(() => setIsLoading(false))
 	}, [])
 
 	return (
