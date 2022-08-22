@@ -1,17 +1,23 @@
 import React from 'react'
 import './styles.scss'
 
-export const User = ({ first_name, last_name, email, avatar }) => {
+export const User = ({
+	id,
+	first_name,
+	last_name,
+	email,
+	avatar,
+	onClickInvites,
+	inviteData
+}) => {
 	return (
 		<li>
 			<div>
-				<img
-					className="avatar"
-					src={avatar}
-					alt="User"
-				/>
+				<img className="avatar" src={avatar} alt="User" />
 				<div>
-					<h3>{first_name} {last_name}</h3>
+					<h3>
+						{first_name} {last_name}
+					</h3>
 					<p>
 						<svg
 							viewBox="0 0 96 96"
@@ -23,7 +29,14 @@ export const User = ({ first_name, last_name, email, avatar }) => {
 					</p>
 				</div>
 			</div>
-			<img className="action" src="/assets/plus.svg" alt="Action" />
+			<img
+				onClick={() => onClickInvites(id)}
+				className="action"
+				src={`/assets/${
+					inviteData.includes(id) ? 'minus' : 'plus'
+				}.svg`}
+				alt="Action"
+			/>
 		</li>
 	)
 }
