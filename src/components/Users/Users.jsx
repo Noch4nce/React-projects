@@ -41,6 +41,13 @@ export const Users = () => {
 			) : (
 				<ul className="users-list">
 					{userData.map((userInfo) => {
+						// const fullName =
+						// 	(userInfo.first_name + userInfo.last_name).toLowerCase()
+						//
+						// if (fullName.includes(searchValue)) {
+						// 	return <User key={userInfo.id} {...userInfo} />
+						// }
+
 						if (
 							userInfo.first_name
 								.slice(0, searchValue.length)
