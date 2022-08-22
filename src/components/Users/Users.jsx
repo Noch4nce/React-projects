@@ -10,6 +10,7 @@ export const Users = () => {
 	const [inviteData, setInviteData] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 	const [searchValue, setSearchValue] = useState('')
+	const [isSentInvite, setIsSentInvite] = useState(false)
 
 	useEffect(() => {
 		fetch(USERS_API)
@@ -37,8 +38,11 @@ export const Users = () => {
 
 	return (
 		<div className="App">
-			{iSsentInvitations ? (
-				<Success />
+			{isSentInvite ? (
+				<Success
+					setIsSentInvite={setIsSentInvite}
+					count={inviteData.length}
+				/>
 			) : (
 				<>
 					<div className="search">
@@ -65,13 +69,6 @@ export const Users = () => {
 					) : (
 						<ul className="users-list">
 							{userData.map((userInfo) => {
-								// const fullName =
-								// 	(userInfo.first_name + userInfo.last_name).toLowerCase()
-								//
-								// if (fullName.includes(searchValue)) {
-								// 	return <User key={userInfo.id} {...userInfo} />
-								// }
-
 								if (
 									userInfo.first_name
 										.slice(0, searchValue.length)
@@ -91,12 +88,25 @@ export const Users = () => {
 										/>
 									)
 								}
+
+								return ''
+								// const fullName =
+								// 	(userInfo.first_name + userInfo.last_name).toLowerCase()
+								//
+								// if (fullName.includes(searchValue)) {
+								// 	return <User key={userInfo.id} {...userInfo} />
+								// }
 							})}
 						</ul>
 					)}
-					<button className="send-invite-btn">
-						Отправить приглашение
-					</button>
+					{inviteData.length > 0 && (
+						<button
+							onClick={() => setIsSentInvite(true)}
+							className="send-invite-btn"
+						>
+							Отправить приглашение
+						</button>
+					)}
 				</>
 			)}
 		</div>
