@@ -5,6 +5,7 @@ import { CURRENCY_EXCHANGE_API } from '../api/api'
 
 const CurrencyConvertor = () => {
 	const [ratesData, setRatesData] = useState({})
+	const [currency, setCurrency] = useState('RUB')
 
 	useEffect(() => {
 		fetch(CURRENCY_EXCHANGE_API)
@@ -16,11 +17,17 @@ const CurrencyConvertor = () => {
 			})
 	}, [])
 
-	console.log(ratesData, 'ratesData')
+	const onChangeCurrency = (cur) => {
+		setCurrency(cur)
+	}
 
 	return (
 		<div className="App">
-			<Block value={0} currency="RUB" />
+			<Block
+				value={0}
+				currency={currency}
+				onChangeCurrency={onChangeCurrency}
+			/>
 			<Block value={0} currency="USD" />
 		</div>
 	)
