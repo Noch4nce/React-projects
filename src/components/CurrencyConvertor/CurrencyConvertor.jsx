@@ -38,19 +38,35 @@ const CurrencyConvertor = () => {
 		setToPrice(targetValue)
 	}
 
+	const onChangeFromCurrency = (cur) => {
+		const price = ratesData[toCurrency] / ratesData[cur]
+		const result = (price * fromPrice).toFixed(4)
+
+		setToPrice(result)
+		setFromCurrency(cur)
+	}
+
+	const onChangeToCurrency = (cur) => {
+		const price = ratesData[cur] / ratesData[fromCurrency]
+		const result = (price * fromPrice).toFixed(4)
+
+		setToPrice(result)
+		setToCurrency(cur)
+	}
+
 	return (
 		<div className="App">
 			<Block
 				value={fromPrice}
 				currency={fromCurrency}
-				onChangeCurrency={setFromCurrency}
+				onChangeCurrency={onChangeFromCurrency}
 				onChangeValue={onChangeFromPrice}
 			/>
 
 			<Block
 				value={toPrice}
 				currency={toCurrency}
-				onChangeCurrency={setToCurrency}
+				onChangeCurrency={onChangeToCurrency}
 				onChangeValue={onChangeToPrice}
 			/>
 		</div>
