@@ -7,11 +7,11 @@ const CurrencyConvertor = () => {
 	// const [ratesData, setRatesData] = useState({})
 	const ratesRef = useRef({})
 
-	const [fromCurrency, setFromCurrency] = useState('RUB')
-	const [toCurrency, setToCurrency] = useState('USD')
+	const [fromCurrency, setFromCurrency] = useState('USD')
+	const [toCurrency, setToCurrency] = useState('RUB')
 
-	const [fromPrice, setFromPrice] = useState(0)
-	const [toPrice, setToPrice] = useState(1)
+	const [fromPrice, setFromPrice] = useState(1)
+	const [toPrice, setToPrice] = useState(0)
 
 	useEffect(() => {
 		fetch(CURRENCY_EXCHANGE_API)
@@ -19,7 +19,7 @@ const CurrencyConvertor = () => {
 			.then((result) => {
 				// setRatesData(result.rates)
 				ratesRef.current = result.rates
-				onChangeToPrice(1)
+				onChangeFromPrice(1)
 			})
 			.catch((err) => {
 				console.warn(err)
@@ -36,7 +36,8 @@ const CurrencyConvertor = () => {
 	}
 
 	const onChangeToPrice = (targetValue) => {
-		const price = ratesRef.current[fromCurrency] / ratesRef.current[toCurrency]
+		const price =
+			ratesRef.current[fromCurrency] / ratesRef.current[toCurrency]
 		const result = price * targetValue
 
 		setFromPrice(Number(result.toFixed(3)))
@@ -66,6 +67,9 @@ const CurrencyConvertor = () => {
 	useEffect(() => {
 		onChangeToPrice(toPrice)
 	}, [toCurrency])
+
+	console.log(fromPrice, 'fromPrice')
+	console.log(toPrice, 'toPrice')
 
 	return (
 		<div className="App">
