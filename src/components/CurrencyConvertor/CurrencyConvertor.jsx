@@ -23,16 +23,16 @@ const CurrencyConvertor = () => {
 	}, [])
 
 	const onChangeFromPrice = (targetValue) => {
-		const price = ratesData[fromCurrency] / ratesData[toCurrency]
-		const result = (price * targetValue).toFixed(4)
+		const price = targetValue / ratesData[fromCurrency]
+		const result = (price * ratesData[toCurrency]).toFixed(4)
 
 		setToPrice(result)
 		setFromPrice(targetValue)
 	}
 
 	const onChangeToPrice = (targetValue) => {
-		const price = targetValue / ratesData[toCurrency]
-		const result = (price * ratesData[fromCurrency]).toFixed(4)
+		const price = ratesData[fromCurrency] / ratesData[toCurrency]
+		const result = (price * targetValue).toFixed(4)
 
 		setFromPrice(result)
 		setToPrice(targetValue)
