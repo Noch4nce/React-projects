@@ -24,7 +24,7 @@ const CurrencyConvertor = () => {
 
 	const onChangeFromPrice = (targetValue) => {
 		const price = targetValue / ratesData[fromCurrency]
-		const result = (price * ratesData[toCurrency]).toFixed(4)
+		const result = price * ratesData[toCurrency]
 
 		setToPrice(result)
 		setFromPrice(targetValue)
@@ -32,41 +32,51 @@ const CurrencyConvertor = () => {
 
 	const onChangeToPrice = (targetValue) => {
 		const price = ratesData[fromCurrency] / ratesData[toCurrency]
-		const result = (price * targetValue).toFixed(4)
+		const result = price * targetValue
 
 		setFromPrice(result)
 		setToPrice(targetValue)
 	}
 
-	const onChangeFromCurrency = (cur) => {
-		const price = ratesData[toCurrency] / ratesData[cur]
-		const result = (price * fromPrice).toFixed(4)
+	// const onChangeFromCurrency = (cur) => {
+	// 	const price = ratesData[toCurrency] / ratesData[cur]
+	// 	const result = (price * fromPrice).toFixed(4)
+	//
+	// 	setToPrice(result)
+	// 	setFromCurrency(cur)
+	// }
+	//
+	// const onChangeToCurrency = (cur) => {
+	// 	const price = ratesData[cur] / ratesData[fromCurrency]
+	// 	const result = (price * fromPrice).toFixed(4)
+	//
+	// 	setToPrice(result)
+	// 	setToCurrency(cur)
+	// }
 
-		setToPrice(result)
-		setFromCurrency(cur)
-	}
+	useEffect(() => {
+		onChangeFromPrice(fromPrice)
+	}, [fromCurrency])
 
-	const onChangeToCurrency = (cur) => {
-		const price = ratesData[cur] / ratesData[fromCurrency]
-		const result = (price * fromPrice).toFixed(4)
-
-		setToPrice(result)
-		setToCurrency(cur)
-	}
+	useEffect(() => {
+		onChangeToPrice(toPrice)
+	}, [toCurrency])
 
 	return (
 		<div className="App">
 			<Block
 				value={fromPrice}
 				currency={fromCurrency}
-				onChangeCurrency={onChangeFromCurrency}
+				// onChangeCurrency={onChangeFromCurrency}
+				onChangeCurrency={setFromCurrency}
 				onChangeValue={onChangeFromPrice}
 			/>
 
 			<Block
 				value={toPrice}
 				currency={toCurrency}
-				onChangeCurrency={onChangeToCurrency}
+				// onChangeCurrency={onChangeToCurrency}
+				onChangeCurrency={setToCurrency}
 				onChangeValue={onChangeToPrice}
 			/>
 		</div>
