@@ -35,6 +35,7 @@ const CurrencyConvertor = () => {
 				console.warn(err)
 				alert('Response error')
 			})
+		// eslint-disable-next-line
 	}, [onChangeFromPrice])
 
 	// const onChangeToPrice = useCallback(
