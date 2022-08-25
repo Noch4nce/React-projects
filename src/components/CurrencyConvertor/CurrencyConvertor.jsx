@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Block from './Block'
 import './styles.scss'
 import { CURRENCY_EXCHANGE_API } from '../api/api'
 
 const CurrencyConvertor = () => {
-	// const [ratesData, setRatesData] = useState({})
 	const ratesRef = useRef({})
 
 	const [fromCurrency, setFromCurrency] = useState('USD')
@@ -13,34 +12,57 @@ const CurrencyConvertor = () => {
 	const [fromPrice, setFromPrice] = useState(1)
 	const [toPrice, setToPrice] = useState(0)
 
+	const onChangeFromPrice = useCallback(
+		(targetValue) => {
+			const price = targetValue / ratesRef.current[fromCurrency]
+			const result = price * ratesRef.current[toCurrency]
+
+			setToPrice(Number(result.toFixed(2)))
+			setFromPrice(targetValue)
+		},
+		[fromCurrency, toCurrency]
+	)
+
 	useEffect(() => {
 		fetch(CURRENCY_EXCHANGE_API)
 			.then((data) => data.json())
 			.then((result) => {
-				// setRatesData(result.rates)
 				ratesRef.current = result.rates
-				onChangeFromPrice(1)
+				// onChangeFromPrice(1)
+				onChangeFromPrice(fromPrice)
 			})
 			.catch((err) => {
 				console.warn(err)
 				alert('Response error')
 			})
-	}, [])
+	}, [onChangeFromPrice])
 
-	const onChangeFromPrice = (targetValue) => {
-		const price = targetValue / ratesRef.current[fromCurrency]
-		const result = price * ratesRef.current[toCurrency]
+	// const onChangeToPrice = useCallback(
+	// 	(targetValue) => {
+	// 		const price =
+	// 			ratesRef.current[fromCurrency] / ratesRef.current[toCurrency]
+	// 		const result = price * targetValue
+	//
+	// 		setFromPrice(result.toFixed(2))
+	// 		setToPrice(targetValue)
+	// 	},
+	// 	[fromCurrency, toCurrency]
+	// )
 
-		setToPrice(Number(result.toFixed(3)))
-		setFromPrice(targetValue)
-	}
+	// const onChangeFromPrice = (targetValue) => {
+	// 	const price = targetValue / ratesRef.current[fromCurrency]
+	// 	const result = price * ratesRef.current[toCurrency]
+	//
+	// 	setToPrice(Number(result.toFixed(3)))
+	// 	setFromPrice(targetValue)
+	// }
 
 	const onChangeToPrice = (targetValue) => {
 		const price =
 			ratesRef.current[fromCurrency] / ratesRef.current[toCurrency]
 		const result = price * targetValue
 
-		setFromPrice(Number(result.toFixed(3)))
+		setFromPrice(Number(result.toFixed(2)))
 		setToPrice(targetValue)
 	}
 
@@ -60,16 +82,13 @@ const CurrencyConvertor = () => {
 	// 	setToCurrency(cur)
 	// }
 
-	useEffect(() => {
-		onChangeFromPrice(fromPrice)
-	}, [fromCurrency])
-
-	useEffect(() => {
-		onChangeToPrice(toPrice)
-	}, [toCurrency])
-
-	console.log(fromPrice, 'fromPrice')
-	console.log(toPrice, 'toPrice')
+	// useEffect(() => {
+	// 	onChangeFromPrice(fromPrice)
+	// }, [onChangeFromPrice, fromCurrency, fromPrice])
+	// //
+	// useEffect(() => {
+	// 	onChangeToPrice(toPrice)
+	// }, [onChangeToPrice, toCurrency, toPrice])
 
 	return (
 		<div className="App">
