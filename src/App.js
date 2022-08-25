@@ -1,5 +1,5 @@
 import './index.scss'
-import Users from './components/Users/Users'
+import CurrencyConvertor from './components/CurrencyConvertor/CurrencyConvertor'
 
 function App() {
 	return (
@@ -7,7 +7,8 @@ function App() {
 			{/*<Counter />*/}
 			{/*<Modal />*/}
 			{/*<Quiz />*/}
-			<Users />
+			{/*<Users />*/}
+			<CurrencyConvertor />
 		</>
 	)
 }
