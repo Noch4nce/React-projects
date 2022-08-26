@@ -16,13 +16,14 @@ const Photos = () => {
 	const [searchValue, setSearchValue] = useState('')
 	const [categoryId, setCategoryId] = useState(0)
 	const [isLoading, setIsLoading] = useState(true)
+	const [page, setPage] = useState(1)
 
 	useEffect(() => {
 		setIsLoading(true)
 
 		fetch(
 			`${PHOTOS_COLLECTIONS_API}?${
-				categoryId !== 0 ? `category=${categoryId}` : ''
+				categoryId !== 0 ? `category=${categoryId}` : `page=${page}&limit=3`
 			}`
 		)
 			.then((data) => data.json())
@@ -32,8 +33,8 @@ const Photos = () => {
 				alert('Response error')
 			})
 			.finally(() => setIsLoading(false))
-	}, [categoryId])
-	console.log(dataPhotos, 'dataPhotos')
+	}, [categoryId, page])
+	console.log([...Array(3)], 'dataPhotos')
 
 	return (
 		<div>
@@ -79,9 +80,14 @@ const Photos = () => {
 					)}
 				</div>
 				<ul className="pagination">
-					<li>1</li>
-					<li className="active">2</li>
-					<li>3</li>
+					{[...Array(3)].map((_, index) => (
+						<li
+							onClick={() => setPage(index + 1)}
+							className={index + 1 === page ? 'active' : ''}
+						>
+							{index + 1}
+						</li>
+					))}
 				</ul>
 			</div>
 		</div>
