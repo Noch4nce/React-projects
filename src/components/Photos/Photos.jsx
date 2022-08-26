@@ -20,11 +20,9 @@ const Photos = () => {
 
 	useEffect(() => {
 		setIsLoading(true)
-		const pageParam = `page=${page}&limit=3`
-		const category =
-			categoryId !== 0 ? `category=${categoryId}` : ''
+		const category = categoryId !== 0 ? `category=${categoryId}` : `page=${page}&limit=3`
 
-		fetch(`${PHOTOS_COLLECTIONS_API}?${pageParam}&${category}`)
+		fetch(`${PHOTOS_COLLECTIONS_API}?${category}`)
 			.then((data) => data.json())
 			.then((result) => setDataPhotos(result))
 			.catch((error) => {
@@ -78,14 +76,16 @@ const Photos = () => {
 					)}
 				</div>
 				<ul className="pagination">
-					{[...Array(3)].map((_, index) => (
-						<li
-							onClick={() => setPage(index + 1)}
-							className={index + 1 === page ? 'active' : ''}
-						>
-							{index + 1}
-						</li>
-					))}
+					{categoryId === 0 &&
+						[...Array(3)].map((_, index) => (
+							<li
+								key={index}
+								onClick={() => setPage(index + 1)}
+								className={index + 1 === page ? 'active' : ''}
+							>
+								{index + 1}
+							</li>
+						))}
 				</ul>
 			</div>
 		</div>
