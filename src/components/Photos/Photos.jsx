@@ -15,6 +15,7 @@ const Photos = () => {
 	const [dataPhotos, setDataPhotos] = useState([])
 	const [searchValue, setSearchValue] = useState('')
 	const [categoryId, setCategoryId] = useState(0)
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
 		fetch(
@@ -28,6 +29,7 @@ const Photos = () => {
 				console.warn(error)
 				alert('Response error')
 			})
+			.finally(() => setIsLoading(false))
 	}, [categoryId])
 	console.log(dataPhotos, 'dataPhotos')
 
@@ -55,20 +57,24 @@ const Photos = () => {
 					/>
 				</div>
 				<div className="content">
-					{dataPhotos
-						.filter((card) => {
-							const cardName = card.name.toLowerCase()
-							const searchName = searchValue.toLowerCase()
+					{isLoading ? (
+						<h2>Идет загрузка...</h2>
+					) : (
+						dataPhotos
+							.filter((card) => {
+								const cardName = card.name.toLowerCase()
+								const searchName = searchValue.toLowerCase()
 
-							return cardName.includes(searchName)
-						})
-						.map((card, index) => (
-							<Collection
-								key={index}
-								name={card.name}
-								images={card.photos}
-							/>
-						))}
+								return cardName.includes(searchName)
+							})
+							.map((card, index) => (
+								<Collection
+									key={index}
+									name={card.name}
+									images={card.photos}
+								/>
+							))
+					)}
 				</div>
 				<ul className="pagination">
 					<li>1</li>
