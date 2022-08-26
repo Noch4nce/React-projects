@@ -18,6 +18,8 @@ const Photos = () => {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
+		setIsLoading(true)
+
 		fetch(
 			`${PHOTOS_COLLECTIONS_API}?${
 				categoryId !== 0 ? `category=${categoryId}` : ''
