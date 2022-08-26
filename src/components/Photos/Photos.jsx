@@ -20,12 +20,11 @@ const Photos = () => {
 
 	useEffect(() => {
 		setIsLoading(true)
+		const pageParam = `page=${page}&limit=3`
+		const category =
+			categoryId !== 0 ? `category=${categoryId}` : ''
 
-		fetch(
-			`${PHOTOS_COLLECTIONS_API}?${
-				categoryId !== 0 ? `category=${categoryId}` : `page=${page}&limit=3`
-			}`
-		)
+		fetch(`${PHOTOS_COLLECTIONS_API}?${pageParam}&${category}`)
 			.then((data) => data.json())
 			.then((result) => setDataPhotos(result))
 			.catch((error) => {
@@ -34,7 +33,6 @@ const Photos = () => {
 			})
 			.finally(() => setIsLoading(false))
 	}, [categoryId, page])
-	console.log([...Array(3)], 'dataPhotos')
 
 	return (
 		<div>
