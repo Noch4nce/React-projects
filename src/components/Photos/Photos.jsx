@@ -5,7 +5,7 @@ import Collection from './Collection'
 
 const Photos = () => {
 	const [dataPhotos, setDataPhotos] = useState([])
-	const [search, setSearch] = useState('')
+	const [searchValue, setSearchValue] = useState('')
 
 	useEffect(() => {
 		fetch(PHOTOS_COLLECTIONS_API)
@@ -16,7 +16,6 @@ const Photos = () => {
 				alert('Response error')
 			})
 	}, [])
-	console.log(search, 'search')
 
 	return (
 		<div>
@@ -31,28 +30,27 @@ const Photos = () => {
 						<li>Города</li>
 					</ul>
 					<input
-						onChange={(event) => setSearch(event.target.value)}
+						value={searchValue}
+						onChange={(event) => setSearchValue(event.target.value)}
 						className="search-input"
 						placeholder="Поиск по названию"
 					/>
 				</div>
 				<div className="content">
-					{dataPhotos.map((card, index) => {
-						const cardName = card.name.toLowerCase()
-						const searchName = search.toLowerCase()
+					{dataPhotos
+						.filter((card) => {
+							const cardName = card.name.toLowerCase()
+							const searchName = searchValue.toLowerCase()
 
-						if (cardName.includes(searchName)) {
-							return (
-								<Collection
-									key={index}
-									name={card.name}
-									images={card.photos}
-								/>
-							)
-						}
-
-						return ''
-					})}
+							return cardName.includes(searchName)
+						})
+						.map((card, index) => (
+							<Collection
+								key={index}
+								name={card.name}
+								images={card.photos}
+							/>
+						))}
 				</div>
 				<ul className="pagination">
 					<li>1</li>
