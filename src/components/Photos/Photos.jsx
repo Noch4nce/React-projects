@@ -3,19 +3,33 @@ import './styles.scss'
 import { PHOTOS_COLLECTIONS_API } from '../api/api'
 import Collection from './Collection'
 
+const categories = [
+	{ name: 'Все' },
+	{ name: 'Море' },
+	{ name: 'Горы' },
+	{ name: 'Архитектура' },
+	{ name: 'Города' }
+]
+
 const Photos = () => {
 	const [dataPhotos, setDataPhotos] = useState([])
 	const [searchValue, setSearchValue] = useState('')
+	const [categoryId, setCategoryId] = useState(0)
 
 	useEffect(() => {
-		fetch(PHOTOS_COLLECTIONS_API)
+		fetch(
+			`${PHOTOS_COLLECTIONS_API}?${
+				categoryId !== 0 ? `category=${categoryId}` : ''
+			}`
+		)
 			.then((data) => data.json())
 			.then((result) => setDataPhotos(result))
 			.catch((error) => {
 				console.warn(error)
 				alert('Response error')
 			})
-	}, [])
+	}, [categoryId])
+	console.log(dataPhotos, 'dataPhotos')
 
 	return (
 		<div>
@@ -23,11 +37,15 @@ const Photos = () => {
 				<h1>Моя коллекция фотографий</h1>
 				<div className="top">
 					<ul className="tags">
-						<li className="active">Все</li>
-						<li>Горы</li>
-						<li>Море</li>
-						<li>Архитектура</li>
-						<li>Города</li>
+						{categories.map((category, index) => (
+							<li
+								key={category.name}
+								onClick={() => setCategoryId(index)}
+								className={categoryId === index ? 'active' : ''}
+							>
+								{category.name}
+							</li>
+						))}
 					</ul>
 					<input
 						value={searchValue}
